@@ -80,8 +80,8 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
-
+.dev.env
+.development.env
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and *not* Next.js
@@ -89,8 +89,8 @@ dist
 # public
 
 # vuepress build output
-.vuepress/dist
-
+.dev.env
+.development.env
 # Serverless directories
 .serverless/
 
@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+.dev.env
+.development.env
