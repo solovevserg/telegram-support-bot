@@ -1,6 +1,7 @@
-# telegram-support-bot
+# [telegram-support-bot](https://github.com/solovevserg/telegram-support-bot)
 
-Simple bot for getting help to your clients.
+Simple bot for providing support to your client from staff chat.
+
 Inspired by [telegram-support-bot](https://github.com/bostrot/telegram-support-bot) by [Eric Trenkel](https://github.com/bostrot).
 
 ## Using

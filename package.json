@@ -1,6 +1,7 @@
 {
   "name": "telegram-support-bot",
   "version": "0.0.1",
+  "description": "Simple bot for providing support to your client from staff chat",
   "main": "dist/index.js",
   "repository": "https://github.com/solovevserg/telegram-support-bot.git",
   "author": "Sergei Solovev <sergey.soloviev@inbox.ru>",
