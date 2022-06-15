@@ -7,9 +7,12 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "yarn nodemon src/index.ts"
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "telegraf": "^4.8.5"
   },
   "devDependencies": {

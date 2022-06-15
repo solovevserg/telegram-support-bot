@@ -1,16 +1,20 @@
+import { config } from 'dotenv';
 import { Telegraf } from 'telegraf';
 import { Message } from 'telegraf/typings/core/types/typegram';
 
+config({ path: '.dev.env' });
+config();
+
 type PossibleTextMessage = Message & { text?: string, reply_to_message?: PossibleTextMessage };
 
-const BOT_TOKEN = process.argv[2] || process.env.BOT_TOKEN;
-const BOT_SUPPORT_CHAT_ID = Number(process.argv[3] || process.env.BOT_TOKEN);
+const BOT_SUPPORT_TOKEN = process.argv[2] || process.env.BOT_SUPPORT_TOKEN;
+const BOT_SUPPORT_CHAT_ID = Number(process.argv[3] || process.env.BOT_SUPPORT_CHAT_ID);
 
-if(!BOT_TOKEN) {
-    throw new Error(`Bot token is required and must be provided via environment variable BOT_TOKEN or as first command line argument`)
+if (!BOT_SUPPORT_TOKEN) {
+    throw new Error(`Bot token is required and must be provided via environment variable BOT_SUPPORT_TOKEN or as first command line argument`)
 }
 
-if(!BOT_SUPPORT_CHAT_ID) {
+if (!BOT_SUPPORT_CHAT_ID) {
     throw new Error(`Support chat id is required and must be provided via environment variable BOT_SUPPORT_CHAT_ID or as second command line argument`)
 }
 
@@ -20,17 +24,17 @@ enum Strings {
     Notified = 'The message is delivered to the client',
 }
 
-function fill(text: string, length: number) {
-    const repeat = Math.max(length - text.length, 0);
+function fill(text: unknown, length: number) {
+    const repeat = Math.max(length - String(text).length, 0);
     return text + " ".repeat(repeat);
 }
 
-const bot = new Telegraf(BOT_TOKEN);
+const bot = new Telegraf(BOT_SUPPORT_TOKEN);
 
 bot.start((ctx) => ctx.reply(Strings.start));
 
 bot.on('message', async ctx => {
-    const log = (...message: unknown[]) => console.log(`message ${ctx.message.from.id} in chat ${ctx.chat.id} of type ${ctx.chat.type}:`, ...message);
+    const log = (...message: unknown[]) => console.log(`user ${fill(ctx.message.from.id, 10)} | chat ${fill(`${ctx.chat.id} (${ctx.chat.type})`, 27)} |`, ...message);
     try {
         log(`New incoming message.`);
 
@@ -56,7 +60,7 @@ bot.on('message', async ctx => {
                 return;
             }
             const clientId = questionMessage.text?.split('.')?.[0];
-            if (!clientId || Number(clientId) === NaN) {
+            if (!clientId || isNaN(Number(clientId))) {
                 throw new Error(`The problem occured while parsing client id from message. Parsed id: ${clientId}.`);
             }
             const { first_name } = ctx.message.from; // TODO: Change with ref. to const message
